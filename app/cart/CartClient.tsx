@@ -5,6 +5,7 @@ import { useCart } from "../hooks/useCart";
 import Link from "next/link";
 import Heading from "../components/Heading";
 import Button from "../components/Button";
+import ItemContent from "./ItemContent";
 
 const CartClient = () => {
 	const { cartProducts } = useCart();
@@ -33,13 +34,14 @@ const CartClient = () => {
 				<div className="justify-self-center">PRICE</div>
 				<div className="justify-self-center">QUANTITY</div>
 				<div className="justify-self-end">TOTAL</div>
-				<div>
+			
+			</div>
+      <div>
 					{cartProducts &&
 						cartProducts.map((item) => {
-							return <div key={item.id}>{item.name}</div>;
+							return <ItemContent key={item.id} item={item}/>
 						})}
 				</div>
-			</div>
       <div className="border-t-[1.5px] border-slate-200 py-4 flex justify-between gap-4">
 			<div className="w-[100px]">
 				<Button label="Clear Cart" onClick={() => {}} small outline />
