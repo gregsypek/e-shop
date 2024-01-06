@@ -142,7 +142,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 					</>
 				) : (
 					<>
-						{" "}
 						<SetColor
 							cartProduct={cartProduct}
 							images={product.images}

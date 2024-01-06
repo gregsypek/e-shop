@@ -1,5 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { CartProductType } from "../product/[productId]/ProductDetails";
+import { toast } from "react-hot-toast";
 
 type CartContextType = {
 	cartTotalQty: number;
@@ -17,15 +24,24 @@ export const CartContextProvider = (props: Props) => {
 	const [cartTotalQty, setCartTotalQty] = useState(0);
 	const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
 		null
-  );
-  
-  useEffect(() => {
-    const cartItems:any = localStorage.getItem("eShopCartItems");
-    const cProducts: CartProductType[] | null = JSON.parse(cartItems)
+	);
 
-    setCartProducts(cProducts)
+	useEffect(() => {
+		const cartItems: any = localStorage.getItem("eShopCartItems");
+		const cProducts: CartProductType[] | null = JSON.parse(cartItems);
 
-  },[])
+		setCartProducts(cProducts)
+		// setCartProducts((prev) => {
+		// 	// Use functional form of setCartProducts to ensure correct state update
+		// 	if (prev) {
+		// 		// If previous state exists, merge with the new products
+		// 		return [...prev, ...cProducts];
+		// 	} else {
+		// 		// If previous state is null, set the new products
+		// 		return cProducts;
+		// 	}
+		// });
+	}, []);
 
 	const handleAddProductToCart = useCallback((product: CartProductType) => {
 		setCartProducts((prev) => {
@@ -34,12 +50,12 @@ export const CartContextProvider = (props: Props) => {
 				updatedCart = [...prev, product];
 			} else {
 				updatedCart = [product];
-      }
+			}
+			localStorage.setItem("eShopCartItems", JSON.stringify(updatedCart));
       
-      localStorage.setItem('eShopCartItems', JSON.stringify(updatedCart))
-
 			return updatedCart;
 		});
+    toast.success("Product added to cart");
 	}, []);
 
 	const value = {
