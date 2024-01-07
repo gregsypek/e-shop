@@ -1,7 +1,9 @@
 import Container from "@/app/components/Container";
-import { product } from "@/app/utils/product";
+//NOTE: nice trick import product until you implement add delete, inc, dec operations
+// import { product } from "@/app/utils/product";
 import ProductDetails from "./ProductDetails";
 import ListRating from "./ListRating";
+import { products } from "@/app/utils/products";
 
 interface IPrams {
 	productId?: string;
@@ -11,7 +13,7 @@ interface IPrams {
 
 const Product = ({ params }: { params: IPrams }) => {
 
-	product;
+const product = products.find(item=>item.id === params.productId)
 	return (
 		<div className="p-8">
 			<Container>
